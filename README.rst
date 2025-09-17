@@ -35,3 +35,24 @@ Ctrl + C.
 
 Para reativar os serviços:
 docker compose up
+
+=============================================================================
+1. Rodar Migrações e Criar um Superusuário: Como o banco de dados está vazio, 
+você precisará aplicar as migrações do Django e criar um usuário administrador 
+para acessar o painel de administração.
+
+2. Conectar-se ao Banco de Dados: Acessar o banco de dados do seu computador 
+local, usando uma ferramenta como o DBeaver ou psql, para gerenciar os dados
+ diretamente.
+
+3. Configurar um Servidor de Produção: Mudar do servidor de desenvolvimento 
+do Django para um servidor de produção como o Gunicorn para se preparar para 
+o deploy.
+==============================================================================
+Para adquirir secret-key
+Execute o comando shell 
+PYTHONPATH=./src python manage.py shell
+
+Gerar a chave: Dentro do console do Django, execute as seguintes linhas:
+from django.core.management.utils import get_random_secret_key
+print(get_random_secret_key())
