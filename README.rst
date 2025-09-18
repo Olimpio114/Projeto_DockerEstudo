@@ -59,7 +59,7 @@ print(get_random_secret_key())
 ============================================================================
 1. Fazer as Migrações do Banco de Dados: Aplicar as tabelas do Django no seu banco 
 de dados PostgreSQL.
-docker compose up -d
+docker compose up
 
 2. Criar uma Aplicação Django: Iniciar a criação de uma nova aplicação (startapp) 
 para começar a construir as funcionalidades do seu projeto.
@@ -76,4 +76,17 @@ docker ps
 Verificar os logs do contêiner
 O servidor Django já imprime os logs diretamente no seu terminal, mas e se você tivesse rodado o contêiner em segundo plano? Você pode ver os logs de um contêiner específico com este comando:
 
-docker logs <nome_do_seu_contêiner
+docker logs <nome_do_seu_contêiner>
+================================================================================
+Rodar o programa>>>> docker-compose up
+
+vai aparecer >>>Starting development server at http://0.0.0.0:8000/ 
+cole em uma página>>> http://0.0.0.0:8000/
+abrira uma pagina web django
+
+se nçao funcionar siga>>
+depois abra um terminal deferente veja exemplo e rode o código:
+olimpio@olimpio:~/Documentos/Projeto_DockerEstudo$ docker-compose exec web python manage.py migrate
+
+
+
