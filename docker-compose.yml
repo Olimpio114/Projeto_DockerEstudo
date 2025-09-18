@@ -22,7 +22,7 @@ services:
       # Variáveis para a conexão com o banco de dados.
       - DB_NAME=postgres
       - DB_USER=postgres
-      - DB_PASSWORD=your_password
+      - DB_PASSWORD=${DB_PASSWORD}  #AGORA MINHA SENHA ESTÁ NO .ENV
       - DB_HOST=db
   db:
     # O serviço 'db' é o seu banco de dados PostgreSQL.
@@ -32,4 +32,4 @@ services:
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=your_password
+      - POSTGRES_PASSWORD=${DB_PASSWORD}  #AGORA MINHA SENHA ESTÁ NO .ENV
