@@ -74,7 +74,8 @@ Este é o comando mais comum para verificar se algo está ativo no Docker.
 docker ps
 
 Verificar os logs do contêiner
-O servidor Django já imprime os logs diretamente no seu terminal, mas e se você tivesse rodado o contêiner em segundo plano? Você pode ver os logs de um contêiner específico com este comando:
+O servidor Django já imprime os logs diretamente no seu terminal, mas e se você tivesse 
+rodado o contêiner em segundo plano? Você pode ver os logs de um contêiner específico com este comando:
 
 docker logs <nome_do_seu_contêiner>
 ================================================================================
@@ -87,6 +88,22 @@ abrira uma pagina web django
 se nçao funcionar siga>>
 depois abra um terminal deferente veja exemplo e rode o código:
 olimpio@olimpio:~/Documentos/Projeto_DockerEstudo$ docker-compose exec web python manage.py migrate
+===============================================================================
+Como Criar uma POC com seu Projeto
+Para que uma POC seja eficaz, ela deve ser focada em uma única funcionalidade. 
+Um ótimo exemplo é uma lista de tarefas simples (um "To-Do List").
+
+Isso vai testar a capacidade do seu projeto de:
+
+-Receber dados do usuário através de um formulário web.
+
+-Salvar esses dados no banco de dados PostgreSQL.
+
+-Ler esses dados do banco de dados e exibi-los em uma página web.
+
+Com isso, você prova que seu sistema (Django, PostgreSQL, Docker) funciona em conjunto para um problema real.
+================================================================================
+
 
 
 
