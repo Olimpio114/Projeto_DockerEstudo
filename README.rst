@@ -79,17 +79,26 @@ rodado o contêiner em segundo plano? Você pode ver os logs de um contêiner es
 
 docker logs <nome_do_seu_contêiner>
 ================================================================================
-Rodar o programa>>>> docker-compose up
+Como Criar uma POC com seu Projeto
+----------------------------------
+docker-compose exec web python manage.py startapp poc
+================================================================================
+<<<<<Rodar o programa na pasta raiz do projeto>>>> 
+-------------------------------------------------
+docker-compose up    >. rodar 
+docker-compose up -d   >>rodar em segundo plano
+docker-compose ps  >> verificar os contêiners
 
-vai aparecer >>>Starting development server at http://0.0.0.0:8000/ 
 cole em uma página>>> http://0.0.0.0:8000/
-abrira uma pagina web django
 
-se nçao funcionar siga>>
-depois abra um terminal deferente veja exemplo e rode o código:
+Acessar a Segunda Tela (o Painel de Administração) >>>  http://localhost:8000/admin/
+se não funcionar siga>>
+depois abra um terminal diferente veja exemplo e rode o código:
 olimpio@olimpio:~/Documentos/Projeto_DockerEstudo$ docker-compose exec web python manage.py migrate
 ===============================================================================
 Como Criar uma POC com seu Projeto
+docker-compose exec web python manage.py startapp poc
+
 Para que uma POC seja eficaz, ela deve ser focada em uma única funcionalidade. 
 Um ótimo exemplo é uma lista de tarefas simples (um "To-Do List").
 
@@ -103,7 +112,40 @@ Isso vai testar a capacidade do seu projeto de:
 
 Com isso, você prova que seu sistema (Django, PostgreSQL, Docker) funciona em conjunto para um problema real.
 ================================================================================
+A estrutura da tabela Task foi definida no arquivo poc/models.py
+
+Os comandos de migração foram executados para traduzir o modelo de dados em uma tabela real no banco de dados PostgreSQL.
+
+docker-compose exec web python manage.py makemigrations poc
+docker-compose exec web python manage.py migrate
 
 
+Configuração do Painel de Administração
 
+Um superusuário foi criado para ter acesso ao painel de administração integrado do Django.
+ Em seguida, a tabela Task foi registrada para ser gerenciada diretamente no painel.
 
+docker-compose exec web python manage.py createsuperuser
+
+Criação da Lógica da Aplicação (View)
+A lógica para a aplicação de tarefas foi implementada no arquivo poc/views.py.
+Mapeamento das URLs
+As URLs foram configuradas para direcionar as requisições web para a view correta, tanto para 
+a página principal da POC quanto para o painel de administração.
+
+Desenvolvimento da Interface (Template)
+O arquivo HTML (poc/templates/poc/task_list.html) foi criado para fornecer a interface de usuário,
+ com um formulário para adicionar tarefas 
+e uma lista para exibi-las.
+
+=================
+Demonstração da POC
+Para demonstrar a aplicação funcional:
+
+Inicie o ambiente: No terminal, execute docker-compose up -d para garantir que o projeto esteja rodando.
+
+Acesse a POC: Abra o navegador e acesse a URL http://localhost:8000/.
+
+Adicione uma tarefa: Use o formulário na página principal para adicionar uma nova tarefa. A página será recarregada, e a tarefa aparecerá na lista.
+
+Acesse o painel de administração: Vá para http://localhost:8000/admin/ e faça login com o superusuário criado.
