@@ -1,152 +1,153 @@
-=========================================================================================
-Projetos_DockerEstudo
-=========================================================================================
-
-Uma POC (Prova de Conceito) de lista de tarefas utilizando **Python**, **Docker**, **Django**
- e um banco de dados **PostgreSQL**.
-
-.. image:: https://img.shields.io/badge/status-POC%20em%20desenvolvimento-blue.svg
-    :target: https://github.com/usuario/seu-repositorio
-    
-------------------------------------------------------------------------------------------
-
+Documentos-Projetos_Docker_PY
+==================================================================================== 
+Projeto de exemplo utilizando Python , Docker e pyenv para gerenciamento de versões.
+===================================================================================
 Tecnologias Utilizadas
-======================
-
-* **Python** (gerenciado com pyenv)
-* **Docker**
-* **Docker Compose**
-* **Django** ------------------------------------------------------------------------------------------
-
+Python (gerenciado com pyenv)
+Docker
+Docker Compose
+Virtualenv (venv)
 Pré-requisitos
-==============
+Python instalado (recomenda-se usar pyenv)
+Docker
+Docker Compose
+Git
+================================================================================
+Configuração do Ambiente Python
+Instale a versão do Python desejada usando pyenv :
+pyenv install 3.12.2
+pyenv local 3.12.2
+==============================================================================
+Reconstrua a imagem Docker 
+docker build -t minha-primeira-imagem .
 
-Certifique-se de que as seguintes ferramentas estão instaladas e configuradas na sua máquina.
+Execute o contêiner   
+docker run -p 8000:8000 minha-primeira-imagem
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Executando o Docker Compose
+Acesse a aplicação no navegador:
+Abra seu navegador e digite o seguinte endereço: 
+http://localhost:8000.
 
-1.  Python (com pyenv)
----------------------
+Pare os serviços:
+Quando você terminar, volte para o terminal e pressione 
+Ctrl + C.
 
-A forma recomendada para instalar e gerenciar versões do Python é com o **pyenv**. Ele permite que você alterne facilmente entre versões sem conflitos.
+Para reativar os serviços:
+docker compose up
 
-**macOS (via Homebrew)**
+=============================================================================
+1. Rodar Migrações e Criar um Superusuário: Como o banco de dados está vazio, 
+você precisará aplicar as migrações do Django e criar um usuário administrador 
+para acessar o painel de administração.
 
-.. code-block:: bash
+2. Conectar-se ao Banco de Dados: Acessar o banco de dados do seu computador 
+local, usando uma ferramenta como o DBeaver ou psql, para gerenciar os dados
+ diretamente.
 
-    $ brew install pyenv
+3. Configurar um Servidor de Produção: Mudar do servidor de desenvolvimento 
+do Django para um servidor de produção como o Gunicorn para se preparar para 
+o deploy.
+==============================================================================
+Para adquirir secret-key
+Execute o comando shell 
+PYTHONPATH=./src python manage.py shell
 
-**Linux (via curl)**
+Gerar a chave: Dentro do console do Django, execute as seguintes linhas:
+from django.core.management.utils import get_random_secret_key
+print(get_random_secret_key())
+============================================================================
+1. Fazer as Migrações do Banco de Dados: Aplicar as tabelas do Django no seu banco 
+de dados PostgreSQL.
+docker compose up
 
-.. code-block:: bash
+2. Criar uma Aplicação Django: Iniciar a criação de uma nova aplicação (startapp) 
+para começar a construir as funcionalidades do seu projeto.
+docker compose exec web python manage.py migrate
+3. Criar um Superusuário: Criar uma conta de administrador para acessar o painel 
+de administração do Django.
+=================================================================================
 
-    $ curl https://pyenv.run | bash
+Ver os contêineres em execução
+Este é o comando mais comum para verificar se algo está ativo no Docker.
 
-*Após a instalação, siga as instruções no terminal para adicionar o pyenv ao seu PATH.*
+docker ps
 
-2.  Docker e Docker Compose
----------------------------
+Verificar os logs do contêiner
+O servidor Django já imprime os logs diretamente no seu terminal, mas e se você tivesse 
+rodado o contêiner em segundo plano? Você pode ver os logs de um contêiner específico com este comando:
 
-A maneira mais fácil de instalar o Docker e o Docker Compose é através do **Docker Desktop**. Ele é a ferramenta oficial e já inclui o Docker Engine e o Docker Compose.
+docker logs <nome_do_seu_contêiner>
+================================================================================
+Como Criar uma POC com seu Projeto
+----------------------------------
+docker-compose exec web python manage.py startapp poc
+================================================================================
+<<<<<Rodar o programa na pasta raiz do projeto>>>> 
+-------------------------------------------------
+crie o ambiente virtual >. python3 -m venv venv
+ative> source venv/bin/activate
+docker-compose up    >. rodar 
+docker-compose up -d   >>rodar em segundo plano
+docker-compose ps  >> verificar os contêiners
 
-* Baixe e instale o **Docker Desktop** em: `https://www.docker.com/products/docker-desktop/`
+cole em uma página>>> http://0.0.0.0:8000/
 
-**Linux (via gerenciador de pacotes)**
+Acessar a Segunda Tela (o Painel de Administração) >>>  http://localhost:8000/admin/
+se não funcionar siga>>
+depois abra um terminal diferente veja exemplo e rode o código:
+olimpio@olimpio:~/Documentos/Projeto_DockerEstudo$ docker-compose exec web python manage.py migrate
+===============================================================================
+Como Criar uma POC com seu Projeto
+docker-compose exec web python manage.py startapp poc
 
-*Para sistemas baseados em Debian/Ubuntu, use:*
+Para que uma POC seja eficaz, ela deve ser focada em uma única funcionalidade. 
+Um ótimo exemplo é uma lista de tarefas simples (um "To-Do List").
 
-.. code-block:: bash
+Isso vai testar a capacidade do seu projeto de:
 
-    $ sudo apt-get update
-    $ sudo apt-get install docker.io docker-compose
+-Receber dados do usuário através de um formulário web.
 
-3.  Git
--------
+-Salvar esses dados no banco de dados PostgreSQL.
 
-O **Git** é essencial para clonar o repositório.
+-Ler esses dados do banco de dados e exibi-los em uma página web.
 
-**Windows**
+Com isso, você prova que seu sistema (Django, PostgreSQL, Docker) funciona em conjunto para um problema real.
+================================================================================
+A estrutura da tabela Task foi definida no arquivo poc/models.py
 
-* Baixe o instalador oficial em: `https://git-scm.com/download/win`
+Os comandos de migração foram executados para traduzir o modelo de dados em uma tabela real no banco de dados PostgreSQL.
 
-**macOS (via Homebrew)**
-
-.. code-block:: bash
-
-    $ brew install git
-
-**Linux (via gerenciador de pacotes)**
-
-*Para sistemas baseados em Debian/Ubuntu, use:*
-
-.. code-block:: bash
-
-    $ sudo apt-get update
-    $ sudo apt-get install git
-------------------------------------------------------------------------------------------
-
-Configuração e Execução
-=======================
-
-Siga os passos abaixo para colocar o projeto em funcionamento.
-
-1. **Clonar o Repositório**
+docker-compose exec web python manage.py makemigrations poc
+docker-compose exec web python manage.py migrate
 
 
-Primeiro, clone o projeto para sua máquina local usando o Git.
+Configuração do Painel de Administração
 
-.. code-block:: bash
+Um superusuário foi criado para ter acesso ao painel de administração integrado do Django.
+ Em seguida, a tabela Task foi registrada para ser gerenciada diretamente no painel.
 
-    $ git clone https://github.com/seu-usuario/seu-repositorio.git
-    $ cd seu-repositorio
-     
+docker-compose exec web python manage.py createsuperuser
 
-2.  **Configuração do Ambiente Python**
-    
-    Use `pyenv` para instalar a versão do Python desejada:
-    
-    .. code-block:: bash
-    
-        $ pyenv install 3.13.7
-        $ pyenv local 3.13.7
-        # Instale as dependências a partir do arquivo requirements.txt
-        $ pip install -r requirements.txt
-    
-3.  **Executando com Docker Compose**
-    
-    Na pasta raiz do projeto, execute um dos comandos abaixo:
-    
-    .. code-block:: bash
-    
-        # Rodar o programa em primeiro plano (os logs aparecem no terminal)
-        $ docker-compose up
-    
-        # Rodar em segundo plano (libera o terminal)
-        $ docker-compose up -d
-    
-    Para verificar o status dos contêineres:
-    
-    .. code-block:: bash
-    
-        $ docker-compose ps
-    
-------------------------------------------------------------------------------------------
+Criação da Lógica da Aplicação (View)
+A lógica para a aplicação de tarefas foi implementada no arquivo poc/views.py.
+Mapeamento das URLs
+As URLs foram configuradas para direcionar as requisições web para a view correta, tanto para 
+a página principal da POC quanto para o painel de administração.
 
-Acesso à Aplicação
-==================
+Desenvolvimento da Interface (Template)
+O arquivo HTML (poc/templates/poc/task_list.html) foi criado para fornecer a interface de usuário,
+ com um formulário para adicionar tarefas 
+e uma lista para exibi-las.
 
-Após a execução bem-sucedida, a aplicação estará disponível nos seguintes endereços:
+=================
+Demonstração da POC
+Para demonstrar a aplicação funcional:
 
-* **Página Principal (Lista de Tarefas):**
-    
-    Acesse no seu navegador: `http://localhost:8000/`
+Inicie o ambiente: No terminal, execute docker-compose up -d para garantir que o projeto esteja rodando.
 
-* **Painel de Administração:**
-    
-    Acesse no seu navegador: `http://localhost:8000/admin/`
-    
-    Se o painel de administração não funcionar imediatamente (devido a migrações pendentes), execute o comando de migração em um novo terminal:
-    
-    .. code-block:: bash
-    
-        $ docker-compose exec web python manage.py migrate
+Acesse a POC: Abra o navegador e acesse a URL http://localhost:8000/.
 
-------------------------------------------------------------------------------------------
+Adicione uma tarefa: Use o formulário na página principal para adicionar uma nova tarefa. A página será recarregada, e a tarefa aparecerá na lista.
+
+Acesse o painel de administração: Vá para http://localhost:8000/admin/ e faça login com o superusuário criado.
