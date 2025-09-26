@@ -79,7 +79,7 @@ rodado o contêiner em segundo plano? Você pode ver os logs de um contêiner es
 
 docker logs <nome_do_seu_contêiner>
 ================================================================================
-Como Criar uma POC com seu Projeto
+Como Criar uma POC com seu Projeto.
 ----------------------------------
 docker-compose exec web python manage.py startapp poc
 ================================================================================
